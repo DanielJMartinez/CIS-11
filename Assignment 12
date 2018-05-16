@@ -1,0 +1,39 @@
+;Chapter 4 Question 8
+
+;Using a loop and indexed addressing, write code that rotates the members of a 32-bit integer array 
+;forward one position.  The value at the end of the array must wrap around to the first position.  
+;For example, the array [10,20,30,40] would be transformed into [40,10,20,30]
+
+WriteInt64 proto
+ExitProcess proto
+
+.data
+myArray QWORD 10d, 20d, 30d, 40d
+finalArray QWORD 4 DUP (0)
+
+.code
+main proc
+mov rcx, LENGTHOF myArray
+mov rsi, 0
+mov r15, TYPE myArray
+
+MYLOOP:
+mov rax, rsi
+mul r15
+mov rdx, myArray[rax]
+
+cmp rsi, 3
+je HandleLast
+mov finalArray[rax + r15], rdx
+jmp EndLoop
+
+HandleLast:
+mov finalArray[0], rdx
+EndLoop:
+inc rsi
+loop MYLOOP
+
+	call ExitProcess
+main endp
+
+end
