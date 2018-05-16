@@ -1,0 +1,91 @@
+Assignment 6
+
+5.9 #7
+;Write a program that displays a single character at 100 random screen locations, using a timing
+;delay of 100 milliseconds. Hint: Use the GetMaxXY procedure to determine the current size of
+;the console window.
+
+; Chapter 5.9 - #7
+
+.386
+.model flat,stdcall
+.stack 4096
+
+ExitProcess proto
+Gotoxy proto
+RandomRange proto
+WriteChar proto
+GetMaxXY proto
+
+.data
+rows BYTE ?
+cols BYTE ?
+randRow BYTE ?
+randCol BYTE ?
+COUNT DWORD 100
+
+.code
+main proc
+mov ecx, COUNT
+call GetMaxXY
+
+
+MYLOOP:
+mov rows, al
+mov cols, dl
+mov eax, rows
+call RandomRange
+mov randRow, eax
+mov eax, cols
+call RandomRange
+mov randCol, eax
+mov dh, randRow
+mov dl, randCol
+call Gotoxy
+mov al, 'X'
+call WriteChar
+
+
+loop MYLOOP
+
+call ExitProcess
+main endp
+end
+
+
+
+5.9  #10
+;Write a procedure that produces N values in the Fibonacci number series and stores them in an
+;array of doubleword. Input parameters should be a pointer to an array of doubleword, a
+;counter of the number of values to generate. Write a test program that calls your procedure,
+;passing N = 47. The first value in the array will be 1, and the last value will be 2,971,215,073.
+;Use the Visual Studio debugger to open and inspect the array contents
+
+WriteInt64 proto
+ExitProcess proto
+
+.data
+
+.code
+main proc
+mov rcx, 46
+mov rbp, 0
+mov rdi, 1
+
+mov rax, rbp
+call WriteInt64
+mov rax, rdi
+call WriteInt64
+
+MYLOOP:
+mov rax, rbp
+add rax, rdi
+mov rbp, rdi
+mov rdi, rax
+call WriteInt64
+LOOP MYLOOP
+
+call ExitProcess
+main endp
+
+end
