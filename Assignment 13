@@ -55,7 +55,8 @@ je EXIT
 
 
 mov rcx, r15
-loop BIGLOOP
+dec rcx
+jnz BIGLOOP
 
 EXIT:
 call ExitProcess
