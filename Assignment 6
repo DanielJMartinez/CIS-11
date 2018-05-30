@@ -7,14 +7,10 @@ Assignment 6
 
 ; Chapter 5.9 - #7
 
-.386
-.model flat,stdcall
-.stack 4096
-
-ExitProcess proto
 Gotoxy proto
-RandomRange proto
 WriteChar proto
+RandomRange proto
+ExitProcess proto
 GetMaxXY proto
 
 .data
@@ -22,13 +18,12 @@ rows BYTE ?
 cols BYTE ?
 randRow BYTE ?
 randCol BYTE ?
-COUNT DWORD 100
+COUNT = 100
 
 .code
 main proc
-mov ecx, COUNT
 call GetMaxXY
-
+mov ecx, COUNT
 
 MYLOOP:
 mov rows, al
@@ -38,7 +33,7 @@ call RandomRange
 mov randRow, eax
 mov eax, cols
 call RandomRange
-mov randCol, eax
+mov randCol, rax
 mov dh, randRow
 mov dl, randCol
 call Gotoxy
@@ -51,7 +46,6 @@ loop MYLOOP
 call ExitProcess
 main endp
 end
-
 
 
 5.9  #10
